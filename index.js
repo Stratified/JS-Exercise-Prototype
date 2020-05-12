@@ -19,7 +19,6 @@ Airplane.prototype.land = function () {
   this.isFlying = false;
 };
 
-
 /*
 // 👇 COMPLETE YOUR WORK BELOW 👇
 // 👇 COMPLETE YOUR WORK BELOW 👇
@@ -39,9 +38,28 @@ Airplane.prototype.land = function () {
         + It should return a string with `name` and `age`. Example: "Mary, 50"
 */
 
-function Person() {
-
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+  this.stomach = [];
+  this.eat = function (food) {
+    if (this.stomach.length < 10) {
+      this.stomach.push(food);
+    } else {
+      return this.stomach;
+    }
+  };
+  this.poop = function () {
+    this.stomach = [];
+  };
+  this.toString = function () {
+    return `${this.name}, ${this.age}`;
+  };
 }
+const brian = new Person("Brian", 21);
+brian.eat("chicken");
+console.log(brian);
+console.log(brian.toString());
 
 /*
   TASK 2
@@ -57,9 +75,16 @@ function Person() {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+  this.tank = 0;
+  this.odometer = 0;
+  this.fill = function (gallons) {
+    this.tank = this.tank + gallons;
+  };
 }
+const myCar = new Car("Hyundai", 40);
+myCar.fill(10);
+console.log(myCar);
 
 /*
   TASK 3
@@ -68,28 +93,43 @@ function Car() {
     - Besides the methods on Person.prototype, babies have the ability to `.play()`:
         + Should return a string "Playing with x", x being the favorite toy.
 */
-function Baby() {
-
+function Baby(name, age, favoriteToy) {
+  Person.call(this, name, age);
+  this.favoriteToy = favoriteToy;
+  this.play = function () {
+    return `Playing with ${this.favoriteToy}`;
+  };
 }
+Baby.prototype = Object.create(Person.prototype);
+const babyBrian = new Baby("Brian", 21, "Drums");
+console.log(babyBrian);
+console.log(babyBrian.play());
 
 /* 
   TASK 4
 
   In your own words explain the four principles for the "this" keyword below:
-  1. 
-  2. 
-  3. 
-  4. 
+  1. Window/Global object binding: When 'this' is in the global scope, it'll default to selecting your Window object.
+  2. Implicit binding: Whatever is to the left of the dot when invoking a function is 'this'. 
+  3. New binding: 'This' binds itself to a new object using the 'new' keyword.
+  4. Explicit binding: 'This' is explicitly defined using the .call, .apply, or .bind methods.
 */
 
-
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
 ///////// END OF CHALLENGE /////////
-if (typeof exports !== 'undefined') {
-  module.exports = module.exports || {}
-  if (Airplane) { module.exports.Airplane = Airplane }
-  if (Person) { module.exports.Person = Person }
-  if (Car) { module.exports.Car = Car }
-  if (Baby) { module.exports.Baby = Baby }
+if (typeof exports !== "undefined") {
+  module.exports = module.exports || {};
+  if (Airplane) {
+    module.exports.Airplane = Airplane;
+  }
+  if (Person) {
+    module.exports.Person = Person;
+  }
+  if (Car) {
+    module.exports.Car = Car;
+  }
+  if (Baby) {
+    module.exports.Baby = Baby;
+  }
 }
